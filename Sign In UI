@@ -1,0 +1,174 @@
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Button,
+  ImageBackground,
+} from 'react-native';
+import { useState } from 'react';
+
+export default function App() {
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  let isForm = false;
+
+  const checkEmail = (value) => {
+    setEmail(value);
+    const emailRegex =
+      /^[a-zA-Z0-9_.]{2,30}@[a-z]{2,15}\.[a-z]{2,3}(\.[a-z]{2,3})?$/;
+    if (!emailRegex.test(value)) {
+      setEmailError('Invalid Email Format.');
+      isForm = false;
+    } else if (value.length == '') {
+      setEmailError('Email is required.');
+      isForm = false;
+    } else {
+      setEmailError('');
+      isForm = true;
+    }
+  };
+
+  const checkPassword = (pwd) => {
+    setPassword(pwd);
+
+    const pwdRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (pwd.length < 8) {
+      setPasswordError('passsword too short');
+    } else if (!pwdRegex.test(pwd)) {
+      setPasswordError('create a strong password');
+    } else if (pwd.length > 20) {
+      setPasswordError('too long');
+    } else {
+      isForm = true;
+      setPasswordError('');
+    }
+  };
+
+  const submitForm = () => {
+    if (!passwordError && !emailError && email && password) {
+      alert('good');
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+       source = {{uri : 'https://images.pexels.com/photos/4046718/pexels-photo-4046718.jpeg?auto=compress&cs=tinysrgb&w=400'}}
+       style = {styles.bgImage}
+       blurRadius = {1}
+       >
+        <View style={styles.form}>
+          <Image
+            source={{
+              uri: 'https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png',
+            }}
+            style={styles.logo}
+          />
+          <Text style={styles.header}> Sign In </Text>
+
+          <View style={styles.formBody}>
+            <View style={styles.row}>
+              <Text style={{
+                fontSize: 18,
+                letterSpacing: 1,
+                }}> Email </Text>
+              <TextInput
+                placeholder=""
+                style={styles.input}
+                onChangeText={checkEmail}
+              />
+              {emailError ? (
+                <Text style={{ color: 'darkred' }}> {emailError} </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.row}>
+              <Text style={{ fontSize: 18, letterSpacing: 1 }}> Password </Text>
+              <TextInput
+                style={styles.input}
+                secureTextEntry={true}
+                onChangeText={checkPassword}
+              />
+              {passwordError ? (
+                <Text style={{ color: 'darkred' }}> {passwordError} </Text>
+              ) : null}
+            </View>
+
+            <View style={styles.row}>
+              <TouchableOpacity style={styles.loginButton} onPress={submitForm}>
+                <Text style={styles.btnText}> Login </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+
+  form: {
+    flex: 1,
+  },
+
+  header: {
+    marginVertical: 10,
+    textAlign: 'center',
+    fontSize: 32,
+    fontWeight: 700,
+    color: 'darkslategrey',
+  },
+
+  formBody: {
+    marginHorizontal: 10,
+  },
+  row: {
+    marginVertical: 10,
+  },
+  input: {
+    backgroundColor: 'cornsilk',
+    borderWidth: 1,
+    borderColor: 'coral',
+    marginVertical: 10,
+    borderRadius: 4,
+    outline: 'none',
+    padding: 10,
+  },
+  loginButton: {
+    width: '50%',
+    margin: 'auto',
+    backgroundColor: 'crimson',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    justifyContent: 'center',
+  },
+  btnText: {
+    fontSize: 18,
+    fontWeight: 600,
+    color: 'cornsilk',
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    marginVertical: 10,
+    marginHorizontal: 'auto',
+  },
+  bgImage : {
+    flex : 1,
+    resizeMode : 'cover',
+  }
+});
