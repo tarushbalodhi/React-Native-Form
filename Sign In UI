@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   loginButton: {
     width: '50%',
     margin: 'auto',
-    backgroundColor: 'tomato',
+    backgroundColor: 'firebrick',
     paddingHorizontal: 20,
     paddingVertical: 10,
     alignItems: 'center',
@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 18,
-    fontWeight: 600,
-    color: 'darkslategrey',
+    fontWeight: 800,
+    color: 'cornsilk',
   },
   logo: {
     width: 100,
